@@ -8,7 +8,6 @@ RUN apt-get -y update && apt-get -y install \
 	bc \
     build-essential \
     bzip2 \
-	bzr \
 	cmake \
 	cmake-curses-gui \
 	cpio \
@@ -16,6 +15,8 @@ RUN apt-get -y update && apt-get -y install \
 	libncurses5-dev \
 	locales \
 	make \
+	python2 \
+	python-is-python2 \
 	rsync \
 	scons \
 	tree \
