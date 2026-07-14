@@ -8,18 +8,20 @@ locale-gen
 cd ~
 
 BUILDROOT_VERSION=buildroot-2016.05
-wget https://buildroot.org/downloads/$BUILDROOT_VERSION.tar.gz
-tar -xf ./$BUILDROOT_VERSION.tar.gz
-rm -f ./$BUILDROOT_VERSION.tar.gz
+if [ ! -f ~/buildroot.tar.gz ]; then
+	wget https://buildroot.org/downloads/$BUILDROOT_VERSION.tar.gz
+	mv ./$BUILDROOT_VERSION.tar.gz ./buildroot.tar.gz
+fi
+tar -xf ./buildroot.tar.gz
 mv ./$BUILDROOT_VERSION ./buildroot
 
 cd ./buildroot
-patch -p1 < ../libpng12.patch
-patch -p1 < ../sdl_mixer.patch
+patch -p1 <../libpng12.patch
+patch -p1 <../sdl_mixer.patch
 cp ~/trimuismart.config ./.config
 
 if [ -f ~/trimuismart-toolchain.tar.xz ]; then
- 	tar -xf ~/trimuismart-toolchain.tar.xz -C /opt
+	tar -xf ~/trimuismart-toolchain.tar.xz -C /opt
 else
 	export FORCE_UNSAFE_CONFIGURE=1
 	make oldconfig
@@ -32,6 +34,6 @@ else
 	cp ~/sdk-location /opt/trimuismart-toolchain/
 	/opt/trimuismart-toolchain/relocate-sdk.sh
 	cp ~/hwcap.h /opt/trimuismart-toolchain/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/asm/
-	
+
 	rm -rf ~/buildroot
 fi
